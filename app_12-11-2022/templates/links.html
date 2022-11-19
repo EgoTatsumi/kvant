@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Links{% endblock %}
+
+{% block menu %}
+  <li><a href="#">Категории</a></li>
+  <li class="is-active"><a>Ссылки</a></li>
+  <li><a href="{{ url_for('links_manage') }}">Новая ссылка</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="large-3 medium-3 cell" style="background-color: pink;">
+    <p>ПОИСК</p>
+  </div>
+  <div class="auto cell" style="background-color: violet;">
+    <p>ССЫЛКИ</p>
+  </div>
+{% endblock %}
