@@ -55,8 +55,14 @@ def links_manage():
     link_form = LinkForm()
     if request.method == 'POST':
         if link_form.validate_on_submit():
-
-            return f"Форма отправлена: {link_form.data}"
+            link = Link(
+                link=urllib.parse.unquote(link_form.link.data),
+                title=link_form.title.data,
+                comment=link_form.comment.data
+            )
+            session.add(link)
+            session.commit()
+            return redirect('/link_add')
     return render_template('link_add.html', link_form=link_form)
 
 
