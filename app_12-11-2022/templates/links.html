@@ -9,10 +9,55 @@
 {% endblock %}
 
 {% block content %}
+<div class="grid-x grid-padding-x grid-padding-y">
   <div class="large-3 medium-3 cell" style="background-color: pink;">
     <p>ПОИСК</p>
+    <form action="" method="post" novalidate>
+      {{search_form.hidden_tag()}}
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="large-12 cell">
+            {{search_form.link.label}}
+            {{search_form.link(type="text")}}
+            <div class="large-12 cell">
+              {{search_form.link.label}}
+            {{search_form.link(type="text")}}
+              <div class="large-12 cell">
+                {{search_form.link.label}}
+                {{search_form.link(type="text")}}
+            </div>
+            </div>
+          </div>
+          <div class="large-12 cell text-center">
+            {{ search_form.search_submit(type="submit", class="hollow button") }}
+            {% if report_msg %}
+              <div class="callout warning">{{ report_msg }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="auto cell" style="background-color: violet;">
     <p>ССЫЛКИ</p>
+    {% for elem in links %}
+<table>
+  <tbody>
+    <tr>
+      <th>ССЫЛКА</th>
+      <td>{{ elem.link }}</td>
+    </tr>
+    <tr>
+      <th>ЗАГОЛОВОК</th>
+      <td>{{ elem.title }}</td>
+    </tr>
+    <tr>
+      <th>КОММЕНТАРИЙ</th>
+      <td>{{ elem.comment }}</td>
+    </tr>
+  </tbody>
+</table>
+    {% endfor %}
   </div>
+</div>
 {% endblock %}
