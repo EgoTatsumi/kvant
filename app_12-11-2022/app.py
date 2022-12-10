@@ -32,12 +32,12 @@ def links():
     links = session.query(Link).all()
     if request.method == 'POST':
         dict_search = [(str(key).strip(), str(val).strip()) for key, val in dict(search_form.data).items() if
-                       key in ['link', 'title', 'comment'] and val]
+                       key in ['link', 'title', 'Comment'] and val]
         print(dict_search)
         if dict_search:
             pass
         else:
-            report_msg = 'Заполните полностью данные'
+            report_msg = 'Заполните данные'
     return render_template('links.html', links=links, search_form=search_form, report_msg=report_msg)
 
 
@@ -64,7 +64,11 @@ def get_title():
 @app.route('/link_add', methods=['POST', 'GET'])
 def links_manage():
     link_form = LinkForm()
+    cat_arr = session.query(Category).all()
     if request.method == 'POST':
+        print(request.form)
+        print(request.form.getlist('category'))
+        cat_id_selected = request.form.getlist('category')
         if link_form.validate_on_submit():
             link = Link(
                 link=urllib.parse.unquote(link_form.link.data),
@@ -73,8 +77,13 @@ def links_manage():
             )
             session.add(link)
             session.commit()
+            if cat_id_selected:
+                cat_records = session.query(Category).filter(Category.id.in_(cat_id_selected))
+                print(cat_records)
+                link.categories.extend(cat_records)
+                session.commit()
             return redirect('/link_add')
-    return render_template('link_add.html', link_form=link_form)
+    return render_template('link_add.html', link_form=link_form, categories=cat_arr)
 
 
 if __name__ == '__main__':

@@ -20,11 +20,11 @@
             {{search_form.link.label}}
             {{search_form.link(type="text")}}
             <div class="large-12 cell">
-              {{search_form.link.label}}
-            {{search_form.link(type="text")}}
+              {{search_form.title.label}}
+            {{search_form.title(type="text")}}
               <div class="large-12 cell">
-                {{search_form.link.label}}
-                {{search_form.link(type="text")}}
+                {{search_form.Comment.label}}
+                {{search_form.Comment(type="text")}}
             </div>
             </div>
           </div>
@@ -41,20 +41,28 @@
   <div class="auto cell" style="background-color: violet;">
     <p>ССЫЛКИ</p>
     {% for elem in links %}
-<table>
+<table class="unstriped text-left">
   <tbody>
+  <tr>
+    {% if elem.categories %}
+      <th>Категории</th>
+      <td>{{ elem.categories|join(' :: ', attribute='name') }}</td>
+    </tr>
+    {% endif %}
     <tr>
-      <th>ССЫЛКА</th>
+      <th>Ссылка</th>
       <td>{{ elem.link }}</td>
     </tr>
     <tr>
-      <th>ЗАГОЛОВОК</th>
+      <th>Заголовок</th>
       <td>{{ elem.title }}</td>
     </tr>
+  {% if elem.comment %}
     <tr>
-      <th>КОММЕНТАРИЙ</th>
+      <th>Комментарий</th>
       <td>{{ elem.comment }}</td>
     </tr>
+  {% endif %}
   </tbody>
 </table>
     {% endfor %}

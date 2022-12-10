@@ -1,6 +1,7 @@
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
+from sqlalchemy import orm
 
 SqlBase = declarative_base()
 
@@ -15,6 +16,7 @@ class Link(SqlBase):
     comment = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     created_date = sqlalchemy.Column(sqlalchemy.Date,
                                      default=datetime.now().date)
+    categories = orm.relation('Category', secondary='categories_to_links', backref='links')
 
 
 # Таблица категорий
